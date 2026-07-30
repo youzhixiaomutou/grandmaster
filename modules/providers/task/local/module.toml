@@ -1,0 +1,15 @@
+kind = "provider"
+name = "task-local"
+version = "0.1.0"
+implements = "task.contract@^1"
+provides = "task"
+requires = []
+requires_env = []
+
+[config]
+dir = "docs/plans"
+
+[metadata]
+owner = "@youzhixiaomutou"
+status = "active"
+tags = ["task", "local", "markdown"]

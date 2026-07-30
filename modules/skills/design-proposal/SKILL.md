@@ -4,6 +4,7 @@ description: 当改动非平凡（涉及多文件、架构选择、不可逆操�
 version: 0.1.0
 kind: skill
 implements: skill.contract@^1
+requires: [design]
 metadata: { owner: "@youzhixiaomutou", status: active, tags: [design, process] }
 related: [version-control, skill-authoring]
 ---
@@ -24,7 +25,7 @@ related: [version-control, skill-authoring]
 3. 给出方案与取舍；必要时多方案对比。
 4. 列开放决策、红线、验收标准。
 5. 评审（可借 Issue / PR 讨论）。
-6. 通过后落 `docs/designs/NNNN-*.md`，编号递增。
+6. 通过后经 `design` 能力 `persist` 固化（按 `contracts/CONVENTIONS.md` fan-out：`local`=`docs/designs/NNNN`、`github`=评论到原 issue）。
 
 ## 🚫 Red lines
 

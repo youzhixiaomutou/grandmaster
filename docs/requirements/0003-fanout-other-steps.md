@@ -8,7 +8,7 @@ links: [https://github.com/youzhixiaomutou/grandmaster/issues/10]
 
 ## 复述
 
-把"产出经可插拔能力固化（local + github fan-out）"这套，套用到其他流水线步骤：**design-proposal / task-orchestration / testing / documentation**。每步各自独立能力。
+把"产出经可插拔能力固化（local + github fan-out）"这套，套用到其他流水线步骤：**design-proposal / task-orchestration（执行 · 含测试）/ documentation**（`testing` 属执行环节内，不单列）。每步各自独立能力。
 
 ## 假设与默认
 
@@ -18,6 +18,7 @@ links: [https://github.com/youzhixiaomutou/grandmaster/issues/10]
 
 ## 确认结论
 
-- **范围**：全部 4 个产出型步骤。
-- **能力结构**：**各步骤独立能力**（design / task / test-report / doc 各一套契约 + provider）。
-- 具体命名与本地目录见设计方案（`docs/designs/0004` / Issue #10）。双向可回溯：Issue #10。
+- **范围**：3 个产出型步骤（design-proposal / task-orchestration（执行 · 含测试）/ documentation）；`testing` 属执行环节内，不单列。
+- **能力结构**：**各步骤独立能力** `design` / `task` / `doc`，默认 `["local","github"]`（fan-out）。
+- **github 线程**：需求 + 设计挂「原 issue」（`design` 评论到需求 issue）；测试报告 + 文档挂 **PR**（评论）。
+- 详见 `docs/designs/0004`。双向可回溯：Issue #10。

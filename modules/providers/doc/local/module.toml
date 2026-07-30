@@ -1,0 +1,15 @@
+kind = "provider"
+name = "doc-local"
+version = "0.1.0"
+implements = "doc.contract@^1"
+provides = "doc"
+requires = []
+requires_env = []
+
+[config]
+dir = "docs/notes"
+
+[metadata]
+owner = "@youzhixiaomutou"
+status = "active"
+tags = ["doc", "local", "markdown"]

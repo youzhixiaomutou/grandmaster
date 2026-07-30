@@ -14,8 +14,20 @@ mode = "symlink"       # symlink | copy（不支持软链接的环境）
 # 能力 → 激活的 provider（可为单个字符串或多个数组；多 provider 语义见 contracts/CONVENTIONS.md）。
 memory = "local"
 issue = ["local", "github"]   # 需求澄清结论同时固化到 本地文档 + GitHub issue（写类 fan-out）
+design = ["local", "github"]  # 设计：local=docs/designs、github=评论到原 issue
+task = ["local", "github"]    # 执行/测试报告：local=docs/plans、github=评论到 PR
+doc = ["local", "github"]     # 文档条目：local=docs/notes、github=评论到 PR
 # notification = "webhook"
 # secret-source = "env"
 
 [providers.issue.local]
 dir = "docs/requirements"
+
+[providers.design.local]
+dir = "docs/designs"
+
+[providers.task.local]
+dir = "docs/plans"
+
+[providers.doc.local]
+dir = "docs/notes"

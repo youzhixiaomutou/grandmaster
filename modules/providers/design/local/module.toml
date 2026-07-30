@@ -1,0 +1,15 @@
+kind = "provider"
+name = "design-local"
+version = "0.1.0"
+implements = "design.contract@^1"
+provides = "design"
+requires = []
+requires_env = []
+
+[config]
+dir = "docs/designs"
+
+[metadata]
+owner = "@youzhixiaomutou"
+status = "active"
+tags = ["design", "local", "markdown"]
