@@ -1,0 +1,4 @@
+# 选择集：CI。倾向无副作用 / 干跑实现。
+[capabilities]
+# memory = "local"
+# notification = "webhook"   # 干跑模式

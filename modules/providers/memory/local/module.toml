@@ -1,0 +1,15 @@
+kind = "provider"
+name = "memory-local"
+version = "0.1.0"
+implements = "memory.contract@^1"
+provides = "memory"
+requires = []
+requires_env = []
+
+[config]
+dir = ".grandmaster/memory"   # 记忆存放目录：每条一份 markdown + 一份 MEMORY.md 索引
+
+[metadata]
+owner = "@youzhixiaomutou"
+status = "active"
+tags = ["memory", "local", "markdown"]

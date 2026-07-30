@@ -1,0 +1,4 @@
+# 选择集：本地开发。被 grandmaster.toml 的 active_profile 引用，覆盖 [capabilities]。
+[capabilities]
+# memory = "local"
+# secret-source = "env"

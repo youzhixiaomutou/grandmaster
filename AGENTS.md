@@ -1,0 +1,25 @@
+# Grandmaster · Always-on 基线
+
+本仓库为「AI Agent 参与研发」定义统一规程。技能（`SKILL.md`）位于 `modules/skills/`，经软链接共享给各工具，由 `description` **自动触发**。
+**本文件同时经 `CLAUDE.md` 软链接供 Claude Code 读取；Codex 读取本 `AGENTS.md`。**
+
+## 🚫 全局红线（不可谈判）
+
+1. **绝不打印、提交或回显密钥 / 令牌。** 密钥只经 `requires_env` 声明变量名，运行期由 `secret-source` 能力读取；日志、输出、提交一律不含其值。
+2. **对外操作先确认。** push、合并 PR、发通知、调用外部服务等外向 / 不可逆动作，未获持久授权前先与人确认。
+3. **不静默截断。** 凡做了范围裁剪（top-N、采样、跳步）必须显式说明。
+4. **改流程必经 PR。** 不得手改工具目录（`.claude/skills` 等）的软链接目标或绕过评审 / 自查。
+
+## 模块协议（速览）
+
+- 模块 = 目录 + 清单（技能用 `SKILL.md` frontmatter；provider/adapter/infra 用 `module.toml`）+ `implements: <contract>@semver`。
+- 四种 `kind`：`skill`（流程）/ `provider`（能力后端）/ `adapter`（工具接入）/ `infra`（横切，如 secret-source）。
+- 依赖“能力”而非具体实现；激活实现由 skill 步骤内联读 `grandmaster.toml`（+激活 profile）决定。
+
+## 怎么改
+
+- 新增 / 修改任何模块 → 由 `skill-authoring` 引导并按 `contracts/skill.contract.md` 自查。
+- 替换某能力的实现 → 由 `verify-implementation` 按契约 `## Conformance` 逐条核验，全过才启用。
+- 接入新工具 / 初始化链接 → 由 `tool-onboarding`。
+
+详见 `docs/designs/0001-grandmaster.md`。

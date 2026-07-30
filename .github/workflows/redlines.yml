@@ -1,0 +1,46 @@
+name: redlines
+
+# 全仓库唯一的非-skill 可执行物：一道极小的机器硬门。
+# 只拦截不可谈判红线（密钥泄漏）+ 最基本的结构断言。PR 必跑、不依赖 agent。
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  redlines:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Secret scan (non-negotiable red line)
+        run: |
+          set -uo pipefail
+          if git grep -nEI \
+               -e '-----BEGIN [A-Z ]*PRIVATE KEY-----' \
+               -e 'AKIA[0-9A-Z]{16}' \
+               -e '(secret|token|password|api[_-]?key)[[:space:]]*[:=][[:space:]]*"[^"]{8,}"' \
+               -- . ':(exclude).github/workflows/redlines.yml' \
+             | grep -viE 'example|placeholder|your-|changeme|requires_env|<[^>]+>'; then
+            echo "::error::潜在密钥/敏感值命中红线模式。请移除，或改用 secret-source（requires_env 只声明变量名）。"
+            exit 1
+          fi
+          echo "✓ secret scan clean"
+
+      - name: Structural assert (skill name == dir, has description)
+        run: |
+          set -uo pipefail
+          rc=0
+          shopt -s nullglob
+          for f in modules/skills/*/SKILL.md; do
+            dir=$(basename "$(dirname "$f")")
+            name=$(sed -n 's/^name:[[:space:]]*//p' "$f" | head -1 | tr -d '"' | tr -d "'" | tr -d '[:space:]')
+            if [ "$dir" != "$name" ]; then
+              echo "::error file=$f::frontmatter name '$name' != directory '$dir'"; rc=1
+            fi
+            if ! grep -q '^description:' "$f"; then
+              echo "::error file=$f::missing 'description'"; rc=1
+            fi
+          done
+          if [ "$rc" -eq 0 ]; then echo "✓ structure ok"; fi
+          exit "$rc"

@@ -1,0 +1,17 @@
+# Grandmaster 配置：启用的工具、软链接策略、各能力激活的实现。
+# 优先级：本文件 < 用户配置 < 环境变量（如 GM_CAP_memory=mysql 临时覆盖）。
+
+active_profile = "local-dev"
+
+[tools]
+enabled = ["claude", "codex"]
+
+[link]
+granularity = "dir"    # dir = 整目录软链接（加技能免同步）| per-skill
+mode = "symlink"       # symlink | copy（不支持软链接的环境）
+
+[capabilities]
+# 能力 → 激活的 provider。P0 落地最小 memory（本地 markdown）；notification / secret-source 见 P2。
+memory = "local"
+# notification = "webhook"
+# secret-source = "env"
