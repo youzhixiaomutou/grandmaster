@@ -13,6 +13,8 @@
 - `persist(record) -> ref`：创建一个需求条目；若同一需求已存在则**更新**。返回可定位 `ref`（URL 或路径）。
 - `get(ref) -> record`（可选）：按 `ref` 取回。
 
+> 多 provider（同时启用）行为见 [`contracts/CONVENTIONS.md`](CONVENTIONS.md)：`persist` fan-out（best-effort、返回多 `ref`），`get` 按 ref 分派。
+
 ## record 结构
 
 至少含：`title`、`restatement`（复述）、`assumptions`（假设 / 默认）、`confirmed`（确认结论）；可选 `links` / `tags`。
