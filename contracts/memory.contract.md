@@ -14,6 +14,8 @@
 - `recall(query) -> [facts]`：按关键词 / 标签检索，返回零或多条；无命中返回空列表。
 - `forget(id) -> void`：删除指定 `id`；`id` 不存在时为幂等无操作。
 
+> 多 provider（同时启用）行为见 [`contracts/CONVENTIONS.md`](CONVENTIONS.md)：写类（`save` / `forget`）fan-out（best-effort），`recall` 取首个。
+
 ## I/O 与语义
 
 - 一条 fact 至少含：`id`、`content`；可选 `tags`、`created`。

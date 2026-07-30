@@ -25,7 +25,7 @@ related: [design-proposal, task-orchestration]
 2. **找歧义**：列出不明确点、边界条件、隐含假设与约束（性能 / 兼容 / 期限 / 规模 / 依赖）。
 3. **提问**：就"影响做法"的关键歧义提出有针对性问题；能用合理默认解决的直接声明默认值。
 4. **确认**：拿到答复后给出"已确认的需求要点"。
-5. **固化**：读 `grandmaster.toml [capabilities].issue` 得知激活实现，按 `modules/providers/issue/<impl>/impl.md` 执行 `persist`，回报 `ref`。
+5. **固化**：读 `grandmaster.toml [capabilities].issue`（可为单个或多个）；按 `contracts/CONVENTIONS.md` 的多-provider 语义，对每个启用实现执行 `persist`（写类 **fan-out**、best-effort：成功记 `ref`、失败显式报告），回报各 `ref`。
 6. **路由**：**默认进入 [[design-proposal]]（方案设计）**；仅当确属琐碎小改（单行 / 显然、无需方案）时，才显式跳过、直接 [[task-orchestration]]。
 
 ## 🚫 Red lines
