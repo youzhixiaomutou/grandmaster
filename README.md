@@ -25,6 +25,16 @@ docs/designs 通过评审的设计文档
 
 在与 AI 的对话中描述“新增 / 修改一个技能或模块”，`skill-authoring` 会按 `description` 自动触发并引导：复制模板 → 填 `SKILL.md` → 自查 → 提 PR。
 
+## 安装到目标仓库
+
+把这套规程装进你自己的项目（**拷贝快照**，自包含、无外部依赖）：
+
+```
+./install.sh [目标仓库路径]   # 缺省 = 当前目录
+```
+
+装入 `contracts/`、`modules/`、`grandmaster.toml`、`AGENTS.md`(+`CLAUDE.md`)、`.github/workflows/redlines.yml` 等，并建好 `.claude/skills` / `.codex/skills` 软链接——**装完即用**。目标已有的 `grandmaster.toml` / `AGENTS.md` 默认保留（`--force` 覆盖、`--keep` 跳过交互）。**不含** Grandmaster 自身的 `docs/`。更新 = 重跑。
+
 ## 设计与进度
 
 详见 [`docs/designs/0001-grandmaster.md`](docs/designs/0001-grandmaster.md) 与 GitHub Issue #1。当前进度：**P0（Bootstrap）**。

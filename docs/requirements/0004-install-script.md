@@ -19,4 +19,7 @@ links: [https://github.com/youzhixiaomutou/grandmaster/issues/12]
 
 - **方式**：拷贝快照（自包含、无外部依赖；更新 = 重跑覆盖机件）。
 - **范围（仅使用所必需）**：`contracts/`、`modules/`（skills + providers + adapters + infra）、`grandmaster.toml`、`AGENTS.md`(+`CLAUDE.md` 软链接)、`.github/workflows/redlines.yml`、`.github/CODEOWNERS`、`.gitattributes`；**排除** `docs/`（Grandmaster 自身记录/设计）、`README.md`、`.git`、会话文件。
-- 具体拷贝清单与覆盖策略见设计（`docs/designs/0005` / Issue #12）。双向可回溯：Issue #12。
+- **目标路径**：缺省 = 当前目录（`install.sh [target]`）。
+- **可定制文件更新（grandmaster.toml / AGENTS.md 等）**：让用户选择（交互提示 / `--force` 覆盖 / `--keep` 保留，默认保留）。
+- **不做备份**（机件是快照、git 可回溯）。
+- 具体拷贝清单见设计（`docs/designs/0005` / Issue #12）。双向可回溯：Issue #12。
