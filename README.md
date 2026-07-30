@@ -54,6 +54,7 @@ The installer copies only what's needed (`contracts/`, `modules/`, `grandmaster.
 | `task` | local / github | task plan + test report; github = comment on the PR |
 | `doc` | local / github | doc entries; github = comment on the PR |
 | `memory` | local | cross-session facts (markdown) |
+| `secret-source` | env | fetch secrets by name (values read at runtime, never stored) |
 
 Multi-provider semantics live in `contracts/CONVENTIONS.md` — write ops fan out (best-effort, failures reported); read ops use the first/primary.
 
