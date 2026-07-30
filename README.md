@@ -1,46 +1,82 @@
 # Grandmaster
 
-「用 AI Agent 参与研发」的统一规程与**单一事实源**（Single Source of Truth）。
+**English** | [中文](README.zh-CN.md)
 
-研发中的每个动作——写设计方案、版本控制、任务编排、文档、记忆、消息通知，乃至“校验 / 验证实现 / 接入工具”这些**治理动作本身**——都固化成一份 `SKILL.md`（写清 **何时用 / 步骤 / 红线**）。多种 AI 工具（Claude Code、Codex…）通过**软链接**共享同一套技能，行为一致；所有改动走 **git**，可审查、可回溯、可回滚。
+A unified, version-controlled **operating standard for AI agents doing R&D**. Every action — writing design proposals, version control, task orchestration, documentation, memory, notifications, and even the *governance* actions themselves — is codified as a `SKILL.md` (when to use, steps, red lines). Multiple agent tools (Claude Code, Codex, …) share one skill set via **symlinks**, so behavior is consistent; every change goes through **git** — auditable, reviewable, reversible.
 
-## 核心理念
+> **Why "Grandmaster"?** *Grandmaster (GM)* is the highest title in chess. This project gives your AI agents a grandmaster-level, standardized playbook: instead of each tool improvising its own rules, every agent follows the same disciplined, reproducible process.
 
-- **单一事实源**：技能只在 `modules/skills/` 定义一处，各工具目录（`.claude/skills`、`.codex/skills`）是它的软链接。
-- **一切皆模块**：`skill` / `provider` / `adapter` / `infra` 四种模块同构，面向 `contracts/` 里的契约编写。
-- **治理即 skill，AI 即运行时**：校验、验证实现、接入工具都是靠 `description` 自动触发的技能，不引入命令行工具。唯一的非-skill 可执行物，是 CI 上一道只查不可谈判红线（如密钥）的极小兜底（`.github/workflows/redlines.yml`）。
-- **文件即流程**：加一条流程 = 往 `modules/skills/` 加一个文件（整目录软链接下，连“同步”都不用跑）。
+## Core ideas
 
-## 目录
+- **Single source of truth** — a skill is defined once under `modules/skills/`; each tool directory (`.claude/skills`, `.codex/skills`) is just a symlink to it.
+- **Everything is a module** — `skill` / `provider` / `adapter` / `infra`, each implementing a versioned **contract** in `contracts/`.
+- **Governance is skills; the AI is the runtime** — validating, verifying implementations, and onboarding tools are skills auto-triggered by their `description`, not commands. The only non-skill executables are the CI red-line gate and the bootstrap installer.
+- **A flow is a file** — adding a process = adding a file (whole-directory symlinks mean no re-sync).
+- **Pluggable + fan-out** — a capability can have several providers, chosen in `grandmaster.toml`; write operations fan out to all of them (best-effort). E.g. a requirement clarification is persisted to a local doc **and** a GitHub issue at once.
 
-```
-contracts/   接口层（带 ## Conformance 断言清单）
-modules/     一切皆模块：skills / providers / adapters / infra
-profiles/    命名的实现选择集（local-dev / ci …）
-docs/designs 通过评审的设计文档
-.github/     CODEOWNERS + 一道极小红线 CI
-```
-
-## 加一条流程
-
-在与 AI 的对话中描述“新增 / 修改一个技能或模块”，`skill-authoring` 会按 `description` 自动触发并引导：复制模板 → 填 `SKILL.md` → 自查 → 提 PR。
-
-## 安装到目标仓库
-
-把这套规程装进你自己的项目（**一条命令**，脚本自取内容、**拷贝快照**，装完自包含；需 `curl` + `tar` + 网络）：
+## The R&D pipeline
 
 ```
-# 在你的项目根目录执行（缺省装到当前目录）
+requirement-intake → design-proposal → task-orchestration (incl. testing) → version-control → documentation
+```
+
+Each step's output is persisted through a pluggable capability (`local` + `github`, fan-out). GitHub **thread** model: planning artifacts (requirement, design) live on the **issue**; change artifacts (test report, docs) live on the **PR**.
+
+## Install (one command)
+
+Install the whole ruleset into your repo — no manual clone needed:
+
+```bash
+# run in your project root (defaults to the current directory)
 curl -fsSL https://raw.githubusercontent.com/youzhixiaomutou/grandmaster/main/install.sh | bash
 
-# 带参数：指定目录 / 覆盖已有可定制文件 / 指定版本
+# with args: target dir / overwrite customizable files / pin a version
 curl -fsSL https://raw.githubusercontent.com/youzhixiaomutou/grandmaster/main/install.sh | bash -s -- <target> --force --ref <tag>
 
-# 本地 / 离线：./install.sh [target] --src <grandmaster 目录>
+# local / offline
+./install.sh [target] --src <grandmaster-dir>
 ```
 
-装入 `contracts/`、`modules/`、`grandmaster.toml`、`AGENTS.md`(+`CLAUDE.md`)、`.github/workflows/redlines.yml` 等，并建好 `.claude/skills` / `.codex/skills` 软链接——**装完即用**。目标已有的 `grandmaster.toml` / `AGENTS.md` 默认保留（`--force` 覆盖、`--keep` 跳过交互）。**不含** Grandmaster 自身的 `docs/`。更新 = 重跑。
+The installer copies only what's needed (`contracts/`, `modules/`, `grandmaster.toml`, `AGENTS.md`, the CI red-line gate, …) and sets up the `.claude/skills` / `.codex/skills` symlinks — **ready to use**. Your existing `grandmaster.toml` / `AGENTS.md` are kept by default (`--force` to overwrite). Grandmaster's own `docs/` are not included. Requires `curl` + `tar`; the repo must stay public for the one-liner to fetch anonymously.
 
-## 设计与进度
+## Skills
 
-详见 [`docs/designs/0001-grandmaster.md`](docs/designs/0001-grandmaster.md) 与 GitHub Issue #1。当前进度：**P0（Bootstrap）**。
+- **Governance**: `skill-authoring`, `verify-implementation`, `tool-onboarding`
+- **R&D**: `requirement-intake`, `design-proposal`, `task-orchestration`, `testing`, `version-control`, `documentation`, `memory`
+- **Example**: `smoke-example`
+
+## Capabilities & providers
+
+| Capability | Providers | Notes |
+|---|---|---|
+| `issue` | local / github | requirement records — local doc **and** GitHub issue |
+| `design` | local / github | design docs; github = comment on the origin issue |
+| `task` | local / github | task plan + test report; github = comment on the PR |
+| `doc` | local / github | doc entries; github = comment on the PR |
+| `memory` | local | cross-session facts (markdown) |
+
+Multi-provider semantics live in `contracts/CONVENTIONS.md` — write ops fan out (best-effort, failures reported); read ops use the first/primary.
+
+## Layout
+
+```
+contracts/    interfaces + Conformance + CONVENTIONS.md
+modules/      skills / providers / adapters / infra
+profiles/     named provider selections
+docs/         designs · requirements · notes · plans (Grandmaster's own; not installed into targets)
+install.sh    one-command bootstrap installer
+.github/      redlines CI gate + CODEOWNERS
+```
+
+## Red lines (always-on, in `AGENTS.md`)
+
+- Never print / commit / echo secrets (names only via `requires_env`, values via `secret-source`).
+- Confirm before outward / irreversible actions (push, merge, notify).
+- No silent truncation.
+- Changing a module goes through a PR.
+
+The CI gate `.github/workflows/redlines.yml` mechanically blocks secret leaks on every PR.
+
+## Design & progress
+
+See `docs/designs/` (`0001` = overall design) and the GitHub Issues. Built through the bootstrap and pluggable phases; next up: `memory` (mysql / mem0), `notification`, `secret-source`.
