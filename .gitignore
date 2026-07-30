@@ -247,5 +247,4 @@ bin
 .claude/worktrees/
 
 ### Grandmaster ###
-# 运行期记忆（本地 markdown provider 默认目录）；如需团队共享可移除此行
-/.grandmaster/memory/
+# 记忆 .grandmaster/memory/ 随 git 入库共享（多 agent / 团队共享），故不忽略。

@@ -23,4 +23,10 @@
 - 替换某能力的实现 → 由 `verify-implementation` 按契约 `## Conformance` 逐条核验，全过才启用。
 - 接入新工具 / 初始化链接 → 由 `tool-onboarding`。
 
+## 记忆（always-on）
+
+- **做事前**：先按当前主题 `recall` 相关记忆（`memory` 能力）作参考。
+- **每步完成后**：由 `memory` 技能判断是否 `save`——只存跨会话有用的稳定事实（决策与理由 / 约定 / 坑 / 用户偏好），不存临时上下文与密钥。
+- 记忆**入库共享**（`.grandmaster/memory/`，随 git）。
+
 详见 `docs/designs/0001-grandmaster.md`。
