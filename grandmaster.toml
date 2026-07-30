@@ -11,7 +11,11 @@ granularity = "dir"    # dir = 整目录软链接（加技能免同步）| per-s
 mode = "symlink"       # symlink | copy（不支持软链接的环境）
 
 [capabilities]
-# 能力 → 激活的 provider。P0 落地最小 memory（本地 markdown）；notification / secret-source 见 P2。
+# 能力 → 激活的 provider。
 memory = "local"
+issue = "local"          # 需求澄清结论固化：local（docs/requirements）| github（GitHub issue）
 # notification = "webhook"
 # secret-source = "env"
+
+[providers.issue.local]
+dir = "docs/requirements"

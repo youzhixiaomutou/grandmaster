@@ -1,0 +1,15 @@
+kind = "provider"
+name = "issue-github"
+version = "0.1.0"
+implements = "issue.contract@^1"
+provides = "issue"
+requires = []
+requires_env = []          # 用已认证的 gh CLI，凭据由 gh 外部管理，不在此声明、不入库
+
+[config]
+# 目标仓库默认取当前仓库；如需跨仓可加 repo = "owner/name"
+
+[metadata]
+owner = "@youzhixiaomutou"
+status = "active"
+tags = ["issue", "github"]

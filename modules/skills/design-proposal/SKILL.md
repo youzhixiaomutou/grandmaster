@@ -15,7 +15,7 @@ related: [version-control, skill-authoring]
 
 ## Inputs / Preconditions
 
-- 待解决的问题陈述与约束。
+- 待解决的问题陈述与约束（**应已由 [[requirement-intake]] 澄清确认**）。
 
 ## Procedure
 
@@ -37,4 +37,4 @@ related: [version-control, skill-authoring]
 
 ## Related
 
-- [[version-control]]、[[skill-authoring]]
+- [[requirement-intake]]、[[version-control]]、[[skill-authoring]]

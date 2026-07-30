@@ -1,0 +1,15 @@
+kind = "provider"
+name = "issue-local"
+version = "0.1.0"
+implements = "issue.contract@^1"
+provides = "issue"
+requires = []
+requires_env = []
+
+[config]
+dir = "docs/requirements"   # 需求条目存放目录：docs/requirements/NNNN-<slug>.md
+
+[metadata]
+owner = "@youzhixiaomutou"
+status = "active"
+tags = ["issue", "local", "markdown"]
