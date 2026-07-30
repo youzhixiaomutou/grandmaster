@@ -1,0 +1,15 @@
+kind = "provider"
+name = "task-github"
+version = "0.1.0"
+implements = "task.contract@^1"
+provides = "task"
+requires = []
+requires_env = []
+
+[config]
+# 目标 = 当前分支的 PR（评论附执行 / 测试报告）；PR 未建则延后补附
+
+[metadata]
+owner = "@youzhixiaomutou"
+status = "active"
+tags = ["task", "github"]

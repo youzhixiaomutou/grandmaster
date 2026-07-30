@@ -4,6 +4,7 @@ description: 当交付功能、变更约定或做出影响他人认知的改动�
 version: 0.1.0
 kind: skill
 implements: skill.contract@^1
+requires: [doc]
 metadata: { owner: "@youzhixiaomutou", status: active, tags: [docs, process] }
 related: [design-proposal, skill-authoring]
 ---
@@ -23,6 +24,7 @@ related: [design-proposal, skill-authoring]
 2. 与代码改动放在同一个 PR 更新。
 3. 遵循既有风格与结构。
 4. 核对文档与代码 / 红线一致；不复制敏感信息。
+5. 经 `doc` 能力 `persist` 固化文档条目（按 `contracts/CONVENTIONS.md` fan-out：`local`=`docs/notes/NNNN`、`github`=评论到当前 PR；不改正文文档）。
 
 ## 🚫 Red lines
 

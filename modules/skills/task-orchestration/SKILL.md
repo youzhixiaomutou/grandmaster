@@ -4,6 +4,7 @@ description: 当一个任务需要 ≥3 个步骤、可并行、或需要拆解�
 version: 0.1.0
 kind: skill
 implements: skill.contract@^1
+requires: [task]
 metadata: { owner: "@youzhixiaomutou", status: active, tags: [process, orchestration] }
 related: [design-proposal, version-control]
 ---
@@ -23,6 +24,7 @@ related: [design-proposal, version-control]
 2. 标注任务间依赖与顺序；决定串行 / 并行 / 是否派子代理。
 3. 逐项推进并更新状态（进行中 / 完成）。
 4. 收敛：逐项对照产出与验收；补齐遗漏。
+5. 经 `task` 能力 `persist` 固化任务计划与测试结果（按 `contracts/CONVENTIONS.md` fan-out：`local`=`docs/plans/NNNN`、`github`=评论到当前 PR）。
 
 ## 🚫 Red lines
 

@@ -1,0 +1,15 @@
+kind = "provider"
+name = "doc-github"
+version = "0.1.0"
+implements = "doc.contract@^1"
+provides = "doc"
+requires = []
+requires_env = []
+
+[config]
+# 目标 = 当前分支的 PR（评论附完成文档摘要 / 链接）；PR 未建则延后补附
+
+[metadata]
+owner = "@youzhixiaomutou"
+status = "active"
+tags = ["doc", "github"]
