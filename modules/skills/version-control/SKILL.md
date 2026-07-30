@@ -30,10 +30,11 @@ related: [design-proposal, skill-authoring]
 - 绝不提交密钥 / 令牌。
 - 对外操作（push / merge）先确认。
 - 不强推主干（no force-push to main）。
+- 相关测试未过不提 PR（见 [[testing]]）。
 
 ## Outputs / Definition of Done
 
-- 一个通过评审、CI 绿的 PR；提交历史清晰可回溯。
+- 一个通过评审、CI 绿、**相关测试通过（见 [[testing]]）**的 PR；提交历史清晰可回溯。
 
 ## Related
 

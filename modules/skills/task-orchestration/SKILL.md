@@ -31,7 +31,7 @@ related: [design-proposal, version-control]
 
 ## Outputs / Definition of Done
 
-- 一份任务分解与其最终状态；全部产出对照验收通过。
+- 一份任务分解与其最终状态；全部产出对照验收通过，且**每个涉及代码 / 功能的产出经 [[testing]] 相应测试通过**。
 
 ## Related
 
