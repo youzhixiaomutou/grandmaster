@@ -1,0 +1,14 @@
+kind = "adapter"
+name = "claude"
+version = "0.1.0"
+implements = "tool-adapter.contract@^1"
+
+[adapter]
+skills_dir = ".claude/skills"
+always_on = "CLAUDE.md"
+discovery = "symlink"
+enable_mechanism = "directory-presence"
+
+[metadata]
+owner = "@youzhixiaomutou"
+status = "active"

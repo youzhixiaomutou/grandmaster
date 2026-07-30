@@ -1,0 +1,14 @@
+kind = "adapter"
+name = "codex"
+version = "0.1.0"
+implements = "tool-adapter.contract@^1"
+
+[adapter]
+skills_dir = ".codex/skills"
+always_on = "AGENTS.md"
+discovery = "symlink"
+enable_mechanism = "config.toml:[[skills.config]]"
+
+[metadata]
+owner = "@youzhixiaomutou"
+status = "active"

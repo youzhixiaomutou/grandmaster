@@ -1,0 +1,2 @@
+# 统一使用 LF，避免跨平台 CRLF 破坏 shell 脚本 / 软链接一致性
+* text=auto eol=lf

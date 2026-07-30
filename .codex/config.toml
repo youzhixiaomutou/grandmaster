@@ -1,0 +1,7 @@
+# Codex 项目级配置。技能经 .codex/skills（软链接 → ../modules/skills）自动发现。
+# [[skills.config]] 仅用于禁用个别技能；启用无需登记（保持“加技能免同步”）。
+#
+# 示例（禁用某技能）：
+# [[skills.config]]
+# path = ".codex/skills/<name>/SKILL.md"
+# enabled = false

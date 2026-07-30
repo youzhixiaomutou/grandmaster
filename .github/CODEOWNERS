@@ -1,0 +1,5 @@
+# 流程、契约与基线改动需 owner 评审
+/contracts/         @youzhixiaomutou
+/modules/           @youzhixiaomutou
+/AGENTS.md          @youzhixiaomutou
+/grandmaster.toml   @youzhixiaomutou
