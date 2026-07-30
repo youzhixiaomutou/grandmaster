@@ -3,6 +3,7 @@ id: 0001-testing-in-execution
 title: 执行阶段纳入测试
 created: 2026-07-30
 tags: [testing, process]
+links: [https://github.com/youzhixiaomutou/grandmaster/issues/6]
 ---
 
 ## 复述
