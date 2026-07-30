@@ -26,7 +26,7 @@ related: [design-proposal, task-orchestration]
 3. **提问**：就"影响做法"的关键歧义提出有针对性问题；能用合理默认解决的直接声明默认值。
 4. **确认**：拿到答复后给出"已确认的需求要点"。
 5. **固化**：读 `grandmaster.toml [capabilities].issue` 得知激活实现，按 `modules/providers/issue/<impl>/impl.md` 执行 `persist`，回报 `ref`。
-6. **路由**：非平凡 → [[design-proposal]]；可直接做 → [[task-orchestration]]。
+6. **路由**：**默认进入 [[design-proposal]]（方案设计）**；仅当确属琐碎小改（单行 / 显然、无需方案）时，才显式跳过、直接 [[task-orchestration]]。
 
 ## 🚫 Red lines
 
