@@ -27,10 +27,16 @@ docs/designs 通过评审的设计文档
 
 ## 安装到目标仓库
 
-把这套规程装进你自己的项目（**拷贝快照**，自包含、无外部依赖）：
+把这套规程装进你自己的项目（**一条命令**，脚本自取内容、**拷贝快照**，装完自包含；需 `curl` + `tar` + 网络）：
 
 ```
-./install.sh [目标仓库路径]   # 缺省 = 当前目录
+# 在你的项目根目录执行（缺省装到当前目录）
+curl -fsSL https://raw.githubusercontent.com/youzhixiaomutou/grandmaster/main/install.sh | bash
+
+# 带参数：指定目录 / 覆盖已有可定制文件 / 指定版本
+curl -fsSL https://raw.githubusercontent.com/youzhixiaomutou/grandmaster/main/install.sh | bash -s -- <target> --force --ref <tag>
+
+# 本地 / 离线：./install.sh [target] --src <grandmaster 目录>
 ```
 
 装入 `contracts/`、`modules/`、`grandmaster.toml`、`AGENTS.md`(+`CLAUDE.md`)、`.github/workflows/redlines.yml` 等，并建好 `.claude/skills` / `.codex/skills` 软链接——**装完即用**。目标已有的 `grandmaster.toml` / `AGENTS.md` 默认保留（`--force` 覆盖、`--keep` 跳过交互）。**不含** Grandmaster 自身的 `docs/`。更新 = 重跑。

@@ -1,27 +1,49 @@
 #!/usr/bin/env bash
-# Grandmaster bootstrap 安装脚本 —— 把「使用所必需」的治理规程拷贝快照进目标仓库。
-# 用法: install.sh [target-repo]   目标仓库路径（缺省 = 当前目录）
-#   --force   覆盖目标已有的可定制文件（grandmaster.toml / AGENTS.md / redlines.yml / .gitattributes）
-#   --keep    保留目标已有的可定制文件（跳过交互）
-#   -h        显示本用法
+# Grandmaster bootstrap 安装脚本 —— 一条命令把治理规程装进目标仓库。
+# 远程一行（无需手动 clone）：
+#   curl -fsSL https://raw.githubusercontent.com/youzhixiaomutou/grandmaster/main/install.sh | bash
+#   curl -fsSL .../install.sh | bash -s -- [target] [--force|--keep] [--ref <ref>]
+# 参数：
+#   [target]        目标仓库路径（缺省 = 当前目录）
+#   --ref <ref>     拉取的分支/标签（缺省 main）
+#   --src <dir>     用本地目录作源（离线/开发；跳过下载）
+#   --force|--keep  可定制文件覆盖/保留策略（默认交互询问）
 set -euo pipefail
 
-SRC="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-TARGET="."
-MODE="ask"   # ask | force | keep
-for a in "$@"; do
-  case "$a" in
+REPO="youzhixiaomutou/grandmaster"
+TARGET="."; REF="main"; MODE="ask"; SRCDIR=""
+while [ $# -gt 0 ]; do
+  case "$1" in
     --force) MODE="force" ;;
     --keep)  MODE="keep" ;;
-    -h|--help) sed -n '2,6p' "$0"; exit 0 ;;
-    -*) echo "未知参数: $a" >&2; exit 2 ;;
-    *)  TARGET="$a" ;;
+    --ref)   REF="${2:?--ref 需要值}"; shift ;;
+    --ref=*) REF="${1#*=}" ;;
+    --src)   SRCDIR="${2:?--src 需要值}"; shift ;;
+    --src=*) SRCDIR="${1#*=}" ;;
+    -h|--help) sed -n '2,15p' "$0" 2>/dev/null || true; exit 0 ;;
+    -*) echo "未知参数: $1" >&2; exit 2 ;;
+    *)  TARGET="$1" ;;
   esac
+  shift
 done
+
+# ---- 解析源：本地 --src，或远程拉取 tarball 到临时目录 ----
+CLEAN=""
+if [ -n "$SRCDIR" ]; then
+  SRC="$(cd "$SRCDIR" && pwd)"
+else
+  command -v curl >/dev/null 2>&1 || { echo "需要 curl" >&2; exit 1; }
+  command -v tar  >/dev/null 2>&1 || { echo "需要 tar"  >&2; exit 1; }
+  SRC="$(mktemp -d)"; CLEAN="$SRC"
+  trap 'rm -rf "$CLEAN"' EXIT
+  echo "拉取 Grandmaster@$REF …"
+  curl -fsSL "https://github.com/$REPO/archive/$REF.tar.gz" | tar xz --strip-components=1 -C "$SRC"
+fi
+{ [ -d "$SRC/contracts" ] && [ -d "$SRC/modules" ]; } || { echo "源不含 contracts/modules（拉取失败？）" >&2; exit 1; }
 
 TARGET="$(cd "$TARGET" 2>/dev/null && pwd || true)"
 { [ -n "$TARGET" ] && [ -d "$TARGET" ]; } || { echo "目标不是有效目录" >&2; exit 1; }
-[ "$TARGET" = "$SRC" ] && { echo "目标不能是 Grandmaster 自身" >&2; exit 1; }
+[ "$TARGET" = "$SRC" ] && { echo "目标不能是源目录" >&2; exit 1; }
 echo "安装 Grandmaster → $TARGET"
 
 # ---- 机件（纯流程定义，重跑覆盖更新）----
