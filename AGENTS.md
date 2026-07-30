@@ -18,6 +18,7 @@
 
 ## 怎么改
 
+- **收到任何需求，先经 `requirement-intake` 澄清**（复述 + 提关键问题 + 固化确认结论）；关键歧义未清不动手。
 - 新增 / 修改任何模块 → 由 `skill-authoring` 引导并按 `contracts/skill.contract.md` 自查。
 - 替换某能力的实现 → 由 `verify-implementation` 按契约 `## Conformance` 逐条核验，全过才启用。
 - 接入新工具 / 初始化链接 → 由 `tool-onboarding`。
