@@ -11,7 +11,7 @@ granularity = "dir"    # dir = 整目录软链接（加技能免同步）| per-s
 mode = "symlink"       # symlink | copy（不支持软链接的环境）
 
 [capabilities]
-# 能力 → 激活的 provider。P0 暂无；memory / notification / secret-source 见 P2。
-# memory = "local"
+# 能力 → 激活的 provider。P0 落地最小 memory（本地 markdown）；notification / secret-source 见 P2。
+memory = "local"
 # notification = "webhook"
 # secret-source = "env"

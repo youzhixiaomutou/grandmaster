@@ -245,3 +245,7 @@ build
 bin
 !**/.claude/**
 .claude/worktrees/
+
+### Grandmaster ###
+# 运行期记忆（本地 markdown provider 默认目录）；如需团队共享可移除此行
+/.grandmaster/memory/
