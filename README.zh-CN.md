@@ -54,6 +54,7 @@ curl -fsSL https://raw.githubusercontent.com/youzhixiaomutou/grandmaster/main/in
 | `task` | local / github | 任务计划 + 测试报告；github = 评论到 PR |
 | `doc` | local / github | 文档条目；github = 评论到 PR |
 | `memory` | local | 跨会话事实（markdown） |
+| `secret-source` | env | 按名取密钥（值只运行期读取，绝不入库） |
 
 多 provider 语义见 `contracts/CONVENTIONS.md`——写类 fan-out（尽力而为、失败显式报告），读类取首个 / 主。
 

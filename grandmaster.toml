@@ -18,16 +18,9 @@ design = ["local", "github"]  # 设计：local=docs/designs、github=评论到�
 task = ["local", "github"]    # 执行/测试报告：local=docs/plans、github=评论到 PR
 doc = ["local", "github"]     # 文档条目：local=docs/notes、github=评论到 PR
 # notification = "webhook"
-# secret-source = "env"
+secret-source = "env"          # 按名取密钥（值只运行期读取，不入库）
 
-[providers.issue.local]
-dir = "docs/requirements"
-
-[providers.design.local]
-dir = "docs/designs"
-
-[providers.task.local]
-dir = "docs/plans"
-
-[providers.doc.local]
-dir = "docs/notes"
+# provider 默认配置见各 module.toml 的 [config]（单一来源）。
+# 仅当需要覆盖某 provider 默认时才在此声明，例：
+# [providers.issue.local]
+# dir = "docs/requirements"

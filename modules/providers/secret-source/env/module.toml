@@ -1,0 +1,12 @@
+kind = "provider"
+name = "secret-source-env"
+version = "0.1.0"
+implements = "secret-source.contract@^1"
+provides = "secret-source"
+requires = []
+requires_env = []
+
+[metadata]
+owner = "@youzhixiaomutou"
+status = "active"
+tags = ["secret-source", "env"]
