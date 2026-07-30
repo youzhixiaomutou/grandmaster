@@ -1,0 +1,1 @@
+- [memory-integration](memory-integration.md) — memory 接入方式=always-on、入库共享、仅 local
