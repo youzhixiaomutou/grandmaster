@@ -15,12 +15,12 @@
 对任何**功能 / 代码 / 变更**请求（不只是改本仓库），**必须按顺序**：
 
 1. **`requirement-intake`** —— 复述 + 澄清关键问题 + **固化确认结论**（`issue` 能力：本地记录 / GitHub · GitLab issue）。关键歧义未清不动手。
-2. **`design-proposal`** —— 非平凡改动先出方案并评审（`design` 能力固化）；仅确属琐碎才可跳过。
+2. **`design-proposal`** —— 非平凡改动先出方案；**产出后必须交用户明确确认**，确认后才经 `design` 能力固化并标 `status: Accepted`（AI 不自盖章）。仅确属琐碎才可跳过。
 3. **实现** —— `task-orchestration`（含 `testing`：写 / 跑测试、全绿才算完成）。
 4. **`version-control`** —— 建分支、提交、开 PR（对外操作先确认）。
 5. **`documentation`** —— 同 PR 更新文档。
 
-🚫 **未完成第 1 步（及非平凡时第 2 步）之前，禁止直接编写实现代码。** CI（`redlines` 的 process-gate）会对"涉及代码却缺 requirement / design"的 PR 打红（琐碎改动可标 `[trivial]` 跳过 design）。
+🚫 **未完成第 1 步、且（非平凡时）设计未获用户确认之前，禁止直接编写实现代码。** CI（`redlines` 的 process-gate）会对"涉及代码却缺 requirement / design"的 PR 打红（琐碎改动可标 `[trivial]` 跳过 design）。
 
 ## 模块协议（速览）
 

@@ -24,12 +24,13 @@ related: [version-control, skill-authoring]
 2. 调研现状与约束（读码、查资料）。
 3. 给出方案与取舍；必要时多方案对比。
 4. 列开放决策、红线、验收标准。
-5. 评审（可借 Issue / PR 讨论）。
-6. 通过后经 `design` 能力 `persist` 固化（按 `contracts/CONVENTIONS.md` fan-out：`local`=`docs/designs/NNNN`、`github`=评论到原 issue）。
+5. **交用户明确确认**（评审可借 Issue / PR 讨论）；**未获用户确认前不得进入实现**。
+6. 用户确认后经 `design` 能力 `persist` 固化（按 `contracts/CONVENTIONS.md` fan-out：`local`=`docs/designs/NNNN`、`github`=评论到原 issue），并把设计标 `status: Accepted`。
 
 ## 🚫 Red lines
 
-- 无评审通过不进入实现。
+- **设计未获用户明确确认，禁止进入实现 / 写代码。**
+- `status` 仅在用户确认后标 `Accepted`——AI 不自行盖章。
 - 方案必须显式写出红线与验收标准。
 
 ## Outputs / Definition of Done
