@@ -17,6 +17,7 @@ issue = ["local", "github"]   # 需求澄清结论同时固化到 本地文档 +
 design = ["local", "github"]  # 设计：local=docs/designs、github=评论到原 issue
 task = ["local", "github"]    # 执行/测试报告：local=docs/plans、github=评论到 PR
 doc = ["local", "github"]     # 文档条目：local=docs/notes、github=评论到 PR
+# 以上 4 者另有 gitlab 实现（glab；MR↔PR、issue-note↔评论），可加入数组启用，例：issue = ["local","github","gitlab"]
 # notification = "webhook"
 secret-source = "env"          # 按名取密钥（值只运行期读取，不入库）
 

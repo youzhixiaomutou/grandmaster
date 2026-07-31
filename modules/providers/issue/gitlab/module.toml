@@ -1,0 +1,15 @@
+kind = "provider"
+name = "issue-gitlab"
+version = "0.1.0"
+implements = "issue.contract@^1"
+provides = "issue"
+requires = []
+requires_env = []
+
+[config]
+# 目标仓库 / 主机由 glab 自身配置；如需跨仓可加 repo = "group/name"
+
+[metadata]
+owner = "@youzhixiaomutou"
+status = "active"
+tags = ["issue", "gitlab"]

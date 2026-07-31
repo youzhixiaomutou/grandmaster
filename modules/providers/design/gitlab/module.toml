@@ -1,0 +1,15 @@
+kind = "provider"
+name = "design-gitlab"
+version = "0.1.0"
+implements = "design.contract@^1"
+provides = "design"
+requires = []
+requires_env = []
+
+[config]
+# 目标 = 该设计对应需求的「原 GitLab issue」（从需求记录 links 取），评论而非新建
+
+[metadata]
+owner = "@youzhixiaomutou"
+status = "active"
+tags = ["design", "gitlab"]

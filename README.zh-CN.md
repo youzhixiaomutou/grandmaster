@@ -58,6 +58,8 @@ curl -fsSL https://raw.githubusercontent.com/youzhixiaomutou/grandmaster/main/in
 
 多 provider 语义见 `contracts/CONVENTIONS.md`——写类 fan-out（尽力而为、失败显式报告），读类取首个 / 主。
 
+> `issue` / `design` / `task` / `doc` 另有 `gitlab` provider（`glab`；MR↔PR、issue-note↔评论）。默认 `github`，可在 `grandmaster.toml` 启用，例：`issue = ["local","github","gitlab"]`。
+
 ## 目录
 
 ```

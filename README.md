@@ -58,6 +58,8 @@ The installer copies only what's needed (`contracts/`, `modules/`, `grandmaster.
 
 Multi-provider semantics live in `contracts/CONVENTIONS.md` — write ops fan out (best-effort, failures reported); read ops use the first/primary.
 
+> `issue` / `design` / `task` / `doc` also have a `gitlab` provider (`glab`; MR↔PR, issue-note↔comment). Opt-in via `grandmaster.toml` (default is `github`), e.g. `issue = ["local","github","gitlab"]`.
+
 ## Layout
 
 ```
