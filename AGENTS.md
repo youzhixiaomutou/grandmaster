@@ -10,15 +10,26 @@
 3. **不静默截断。** 凡做了范围裁剪（top-N、采样、跳步）必须显式说明。
 4. **改流程必经 PR。** 不得手改工具目录（`.claude/skills` 等）的软链接目标或绕过评审 / 自查。
 
+## 研发流程（每个任务的强制顺序）
+
+对任何**功能 / 代码 / 变更**请求（不只是改本仓库），**必须按顺序**：
+
+1. **`requirement-intake`** —— 复述 + 澄清关键问题 + **固化确认结论**（`issue` 能力：本地记录 / GitHub · GitLab issue）。关键歧义未清不动手。
+2. **`design-proposal`** —— 非平凡改动先出方案并评审（`design` 能力固化）；仅确属琐碎才可跳过。
+3. **实现** —— `task-orchestration`（含 `testing`：写 / 跑测试、全绿才算完成）。
+4. **`version-control`** —— 建分支、提交、开 PR（对外操作先确认）。
+5. **`documentation`** —— 同 PR 更新文档。
+
+🚫 **未完成第 1 步（及非平凡时第 2 步）之前，禁止直接编写实现代码。** CI（`redlines` 的 process-gate）会对"涉及代码却缺 requirement / design"的 PR 打红（琐碎改动可标 `[trivial]` 跳过 design）。
+
 ## 模块协议（速览）
 
 - 模块 = 目录 + 清单（技能用 `SKILL.md` frontmatter；provider/adapter/infra 用 `module.toml`）+ `implements: <contract>@semver`。
 - 四种 `kind`：`skill`（流程）/ `provider`（能力后端）/ `adapter`（工具接入）/ `infra`（横切，如 secret-source）。
 - 依赖“能力”而非具体实现；激活实现由 skill 步骤内联读 `grandmaster.toml`（+激活 profile）决定。
 
-## 怎么改
+## 怎么改 Grandmaster 模块（区别于上面的「研发流程」）
 
-- **收到任何需求，先经 `requirement-intake` 澄清**（复述 + 提关键问题 + 固化确认结论）；关键歧义未清不动手。
 - 新增 / 修改任何模块 → 由 `skill-authoring` 引导并按 `contracts/skill.contract.md` 自查。
 - 替换某能力的实现 → 由 `verify-implementation` 按契约 `## Conformance` 逐条核验，全过才启用。
 - 接入新工具 / 初始化链接 → 由 `tool-onboarding`。

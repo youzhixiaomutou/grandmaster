@@ -1,7 +1,7 @@
 name: redlines
 
-# 全仓库唯一的非-skill 可执行物：一道极小的机器硬门。
-# 只拦截不可谈判红线（密钥泄漏）+ 最基本的结构断言。PR 必跑、不依赖 agent。
+# 全仓库唯一的 CI 兜底：机器硬门。PR 必跑、不依赖 agent。
+# 1) 密钥扫描（不可谈判红线）  2) 结构断言  3) 流程门（代码 PR 须 requirement + design）
 
 on:
   pull_request:
@@ -12,6 +12,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Secret scan (non-negotiable red line)
         run: |
@@ -43,4 +45,39 @@ jobs:
             fi
           done
           if [ "$rc" -eq 0 ]; then echo "✓ structure ok"; fi
+          exit "$rc"
+
+      - name: Process gate (代码 PR 须 requirement + design)
+        if: github.event_name == 'pull_request'
+        env:
+          BASE: ${{ github.event.pull_request.base.sha }}
+          PRBODY: ${{ github.event.pull_request.body }}
+          PRTITLE: ${{ github.event.pull_request.title }}
+          LABELS: ${{ join(github.event.pull_request.labels.*.name, ',') }}
+        run: |
+          set -uo pipefail
+          changed=$(git diff --name-only "$BASE"...HEAD 2>/dev/null || git diff --name-only "$BASE" HEAD)
+          code=0
+          while IFS= read -r f; do
+            [ -z "$f" ] && continue
+            case "$f" in
+              docs/*|*.md|*.toml|profiles/*|.github/*|modules/*|contracts/*|install.sh|.grandmaster/*|.claude/*|.codex/*|AGENTS.md|CLAUDE.md|.gitignore|.gitattributes|README*|LICENSE) : ;;
+              *) code=1; echo "  代码改动: $f" ;;
+            esac
+          done <<< "$changed"
+          if [ "$code" -eq 0 ]; then echo "✓ 无代码改动（仅文档/配置/机件），流程门免检"; exit 0; fi
+          req=0; des=0; triv=0
+          echo "$changed" | grep -q '^docs/requirements/' && req=1
+          printf '%s' "$PRBODY" | grep -qiE '(refs|closes|resolves)[[:space:]]*#[0-9]+|/issues/[0-9]+' && req=1
+          echo "$changed" | grep -q '^docs/designs/' && des=1
+          printf '%s' "$PRBODY" | grep -qiE 'docs/designs/' && des=1
+          printf '%s' "$PRTITLE" | grep -qiF '[trivial]' && triv=1
+          printf '%s' "$LABELS" | grep -qiw 'trivial' && triv=1
+          rc=0
+          if [ "$req" -eq 0 ]; then echo "::error::涉代码 PR 缺 requirement（需 docs/requirements/ 变更 或 PR 里 Refs/Closes #N）"; rc=1; fi
+          if [ "$des" -eq 0 ]; then
+            if [ "$triv" -eq 1 ]; then echo "::notice::[trivial] 跳过 design 要求（已回显，不静默）";
+            else echo "::error::涉代码 PR 缺 design（需 docs/designs/ 变更 或链接；琐碎改动可标 [trivial] 跳过）"; rc=1; fi
+          fi
+          if [ "$rc" -eq 0 ]; then echo "✓ 流程门通过"; fi
           exit "$rc"
