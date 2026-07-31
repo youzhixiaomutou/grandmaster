@@ -13,8 +13,7 @@
 
 ## 🚫 Red lines
 
-- body 不含密钥 / 敏感值。
-- 创建 / 评论属**对外操作**：由 [[requirement-intake]] / `version-control` 的确认门约束（未获授权前先确认）。
+- **固化自动执行**：创建 / 评论属流程内持久化（低风险、可回滚），自动执行、不受“对外先确认”约束；`body` / `description` 不写入密钥 / 敏感值。
 
 ## Conformance 对照（见 `contracts/issue.contract.md`）
 
