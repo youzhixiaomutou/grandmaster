@@ -12,7 +12,7 @@
 - **get(ref)**：`glab issue view <ref>`。
 
 ## 🚫 Red lines
-- `description` 不含密钥；创建 / 评论属**对外操作**，遵循“对外先确认”。
+- **固化自动执行**：创建 / 评论属流程内持久化（低风险、可回滚），自动执行、不受“对外先确认”约束；`body` / `description` 不写入密钥 / 敏感值。
 
 ## Conformance 对照（issue.contract）
 1. `ref` = issue / note URL ✓　2. 含 复述/假设/结论 ✓　3. 同需求带 `ref` 走更新（note）不新建 ✓　4. `get` 用 `glab issue view` ✓　5. 不落盘密钥 ✓

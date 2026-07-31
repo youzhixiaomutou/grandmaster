@@ -12,7 +12,7 @@
 - **get(ref)**：`glab mr view <MR>`。
 
 ## 🚫 Red lines
-- 不含密钥；评论属对外操作，遵循“对外先确认”。
+- **固化自动执行**：创建 / 评论属流程内持久化（低风险、可回滚），自动执行、不受“对外先确认”约束；`body` / `description` 不写入密钥 / 敏感值。
 
 ## Conformance 对照（task.contract）
 1. `ref` = MR note URL ✓　2. 含 任务分解 + 测试结果 ✓　3. 更新 ✓　4. **评论到 MR（未建则延后）** ✓　5. 不落盘密钥 ✓
