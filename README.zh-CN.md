@@ -14,13 +14,39 @@
 - **文件即流程**——加一条流程 = 加一个文件（整目录软链接，连"同步"都不用跑）。
 - **可插拔 + fan-out**——一个能力可配多个 provider，在 `grandmaster.toml` 选择；写操作 fan-out 到全部（尽力而为）。例如需求澄清结论**同时**固化到本地文档**和** GitHub issue。
 
-## 研发流水线
+## 研发流水线 —— 使用 Grandmaster 的项目如何运转
 
-```
-requirement-intake → design-proposal → task-orchestration（含 testing）→ version-control → documentation
+每个任务都按此流程（强制顺序）：
+
+```mermaid
+flowchart TD
+    U(["需求 / 功能 / 变更请求"]) --> RI["1 · requirement-intake<br/>复述 · 澄清 · 固化"]
+    RI --> Q{"关键歧义已澄清?"}
+    Q -- 否 --> RI
+    Q -- 是 --> DP["2 · design-proposal<br/>出方案（非平凡）"]
+    DP --> G{{"用户确认设计?"}}
+    G -- 修改 --> DP
+    G -- 确认 --> IM["3 · 实现<br/>task-orchestration + testing（全绿）"]
+    IM --> VC["4 · version-control<br/>建分支 · 提交 · 开 PR"]
+    VC --> DOC["5 · documentation<br/>同 PR 更新文档"]
+    VC --> CI{{"redlines CI<br/>密钥 · 结构 · process-gate"}}
+    CI -- "缺 requirement / design" --> DP
+    CI -- 绿 --> M(["合并入 main"])
+    MEM[("memory — 做事前 recall / 每步后 save<br/>贯穿每一步")]
+    MEM -.-> RI
+    MEM -.-> IM
+    RI -. 固化 .-> ST[["fan-out → local + github / gitlab"]]
+    DP -. 固化 .-> ST
+    IM -. 固化 .-> ST
+    DOC -. 固化 .-> ST
 ```
 
-每步产出经可插拔能力固化（`local` + `github` fan-out）。GitHub **线程**模型：规划产物（需求、设计）挂在 **issue**；改动产物（测试报告、文档）挂在 **PR**。
+- **requirement-intake** —— 复述、澄清、固化确认结论；关键歧义未清不动手。
+- **design-proposal** —— 非平凡改动先出方案，并**等你明确确认**后才实现（`status` 仅你确认后标 `Accepted`）。
+- **实现** —— 拆解任务 + 写 / 跑测试（全绿才算完成）。
+- **version-control** —— 建分支、提交、开 PR（对外操作先确认）；**documentation** 同 PR 更新。
+- **redlines CI** —— 对密钥泄漏、结构破坏、或"涉代码却缺 requirement / design"的 PR 打红（`[trivial]` 可跳 design）。
+- **memory** 贯穿每一步（做事前 recall、每步后 save）；每步产出经 **fan-out** 固化到 `local` + `github` / `gitlab`。规划产物（需求、设计）挂在 **issue**；改动产物（测试报告、文档）挂在 **PR**。
 
 ## 安装（一条命令）
 

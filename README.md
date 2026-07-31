@@ -14,13 +14,39 @@ A unified, version-controlled **operating standard for AI agents doing R&D**. Ev
 - **A flow is a file** — adding a process = adding a file (whole-directory symlinks mean no re-sync).
 - **Pluggable + fan-out** — a capability can have several providers, chosen in `grandmaster.toml`; write operations fan out to all of them (best-effort). E.g. a requirement clarification is persisted to a local doc **and** a GitHub issue at once.
 
-## The R&D pipeline
+## The R&D pipeline — how a project using Grandmaster runs
 
-```
-requirement-intake → design-proposal → task-orchestration (incl. testing) → version-control → documentation
+Every task follows this flow (mandatory order):
+
+```mermaid
+flowchart TD
+    U(["Feature / code / change request"]) --> RI["1 · requirement-intake<br/>restate · clarify · persist"]
+    RI --> Q{"Key ambiguities<br/>resolved?"}
+    Q -- no --> RI
+    Q -- yes --> DP["2 · design-proposal<br/>write proposal (non-trivial)"]
+    DP --> G{{"User approves<br/>the design?"}}
+    G -- revise --> DP
+    G -- approved --> IM["3 · implement<br/>task-orchestration + testing (all green)"]
+    IM --> VC["4 · version-control<br/>branch · commit · open PR"]
+    VC --> DOC["5 · documentation<br/>updated in the same PR"]
+    VC --> CI{{"redlines CI<br/>secrets · structure · process-gate"}}
+    CI -- "missing requirement / design" --> DP
+    CI -- green --> M(["merge to main"])
+    MEM[("memory — recall before / save after<br/>across every step")]
+    MEM -.-> RI
+    MEM -.-> IM
+    RI -. persist .-> ST[["fan-out → local + github / gitlab"]]
+    DP -. persist .-> ST
+    IM -. persist .-> ST
+    DOC -. persist .-> ST
 ```
 
-Each step's output is persisted through a pluggable capability (`local` + `github`, fan-out). GitHub **thread** model: planning artifacts (requirement, design) live on the **issue**; change artifacts (test report, docs) live on the **PR**.
+- **requirement-intake** — restate, clarify, and persist the confirmed requirement; never proceed while key ambiguities remain.
+- **design-proposal** — for non-trivial work, write a proposal and **wait for your explicit approval** before any implementation (`status` flips to `Accepted` only after you confirm).
+- **implement** — decompose tasks, write / run tests (green before done).
+- **version-control** — branch, commit, open a PR (confirm before outward actions); **documentation** rides the same PR.
+- **redlines CI** — blocks the PR on secret leaks, structural breakage, or a code PR missing its requirement / design (`[trivial]` may skip design).
+- **memory** runs across every step (recall before, save after); each step's output is persisted via **fan-out** to `local` + `github` / `gitlab`. Planning artifacts (requirement, design) thread on the **issue**; change artifacts (test report, docs) on the **PR**.
 
 ## Install (one command)
 
