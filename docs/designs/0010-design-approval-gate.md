@@ -1,6 +1,6 @@
 # 0010 · 设计须经用户确认后才能执行
 
-- **状态**: Proposed（**待用户确认**——本设计正在演示所要加的这条规则）
+- **状态**: Accepted（用户已确认）
 - **日期**: 2026-07-31
 - **需求来源**: `docs/requirements/0009-design-approval-gate.md` · Issue #24
 
